@@ -2,7 +2,9 @@ package com.sagarpatel26.friedo;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
                     AsyncHttpClient httpClient = new AsyncHttpClient();
                     httpClient.post(getBaseContext(),
-                            "http://192.168.43.205:5000/login",
+                            Constants.BASE_URL + Constants.URL_LOGIN,
                             entity,
                             "application/json",
                             new AsyncHttpResponseHandler() {
@@ -49,12 +51,20 @@ public class MainActivity extends AppCompatActivity {
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
                                     String mssg = new String(responseBody);
-                                    ((TextView) findViewById(R.id.tv_response)).setText(mssg);
+                                    //((TextView) findViewById(R.id.tv_response)).setText(mssg);
 
-                                    if (mssg.equals("OK")) {
+                                    if (mssg.startsWith("OK")) {
+
+                                        int user_id = Integer.parseInt(mssg.substring(2));
+
+                                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putInt(Constants.KEY_USERID, user_id);
+                                        editor.commit();
 
                                         Intent intent = new Intent(getApplicationContext(), InterestUpdateActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
 
@@ -70,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        Button btn_main_register = (Button) findViewById(R.id.btn_main_register);
+        btn_main_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), RegisterActivity.class));
+            }
+        });
 
     }
 }

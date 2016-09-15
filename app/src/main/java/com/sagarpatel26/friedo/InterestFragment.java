@@ -2,6 +2,7 @@ package com.sagarpatel26.friedo;
 
 
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,8 +20,6 @@ import java.util.ArrayList;
 
 public class InterestFragment extends Fragment {
 
-
-    private static final int MAX_SELECTION = 3;
 
     private static final String ARG_QUESTION = "question";
     private static final String ARG_INTEREST_LIST = "interestList";
@@ -95,21 +94,20 @@ public class InterestFragment extends Fragment {
             public void onClick(View view) {
 
                 // TODO: write a method that would create a list of all interest selected by the user, ALSO IF possible limit them to max 3
-                ArrayList<String> arg = new ArrayList<>();
+                ArrayList<Integer> arg = new ArrayList<>();
 
                 View child_view;
                 for (int i = 0; i < optionsList.getCount(); ++i) {
 
                     child_view = optionsList.getChildAt(i);
                     CheckBox checkBox = (CheckBox) child_view.findViewById(R.id.interestckbx);
-                    TextView textView = (TextView) child_view.findViewById(R.id.interesttxt);
                     if (checkBox.isChecked())
-                        arg.add(textView.getText().toString());
+                        arg.add(i);
                 }
 
-                if (arg.size() > MAX_SELECTION) {
+                if (arg.size() > Constants.MAX_SELECTION) {
 
-                    Toast.makeText(getActivity(), "You cannot select more than " + String.valueOf(MAX_SELECTION) + " choices", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "You cannot select more than " + String.valueOf(Constants.MAX_SELECTION) + " choices", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -142,6 +140,6 @@ public class InterestFragment extends Fragment {
     }
 
     public interface OnNextButtonClickedListener {
-        void OnNextButtonClicked(ArrayList<String> selectedOptions);
+        void OnNextButtonClicked(ArrayList<Integer> selectedOptions);
     }
 }

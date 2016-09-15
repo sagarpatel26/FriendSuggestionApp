@@ -8,10 +8,20 @@ public class Interest {
 
     private String interest;
     private boolean isChecked;
+    private int index;
 
     public Interest(String interest, boolean isChecked) {
         this.interest = interest;
         this.isChecked = isChecked;
+    }
+
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean isChecked() {

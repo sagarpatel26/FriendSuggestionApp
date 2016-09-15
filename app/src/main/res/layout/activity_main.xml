@@ -47,6 +47,14 @@
         android:id="@+id/tv_response"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/ErrorRed"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/btn_main_register"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

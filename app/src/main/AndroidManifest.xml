@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.sagarpatel26.friedo.MainActivity"
+            android:name=".MainActivity"
             android:label="Friedo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sagarpatel26.friedo.InterestUpdateActivity">
-
-        </activity>
+        <activity
+            android:name=".InterestUpdateActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Thanks" />
+        <activity android:name=".Failure" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

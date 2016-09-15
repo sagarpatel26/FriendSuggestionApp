@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 AsyncHttpClient httpClient = new AsyncHttpClient();
                 JSONObject jsonParams = new JSONObject();
                 try {
-                    jsonParams.put("username ", username);
+                    jsonParams.put("username", username);
                     jsonParams.put("email", email);
                     jsonParams.put("password", passw);
 

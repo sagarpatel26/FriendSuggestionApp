@@ -65,20 +65,6 @@ public class InterestUpdateActivity extends AppCompatActivity
 
 
             iqof.execute();
-
-            // Nagaveda
-            Log.d("NOW1", "This Shit should Wait");
-            for (int i = 0; i < Integer.MAX_VALUE; i++)
-                if (questionsList.size() > 1) // No blank screen now!!!
-                    break;
-
-
-            String q = getQuestion(currentFragmentIndex);
-            ArrayList<String> s = getOptionList(currentFragmentIndex);
-
-            InterestFragment currentFragment = InterestFragment.newInstance(q, s);
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, currentFragment).commit();
-
         }
 
     }
@@ -203,7 +189,16 @@ public class InterestUpdateActivity extends AppCompatActivity
             if (!s.equals("NOTOK")) {
 
                 progressDialog.dismiss();
+
+                String q = getQuestion(currentFragmentIndex);
+                ArrayList<String> sl = getOptionList(currentFragmentIndex);
+
+                InterestFragment currentFragment = InterestFragment.newInstance(q, sl);
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, currentFragment).commit();
+
+
                 Toast.makeText(getBaseContext(), "Note: Once you click Next you want to go back, for any change. You change it later from Profile page.", Toast.LENGTH_LONG).show();
+
 
             } else {
 

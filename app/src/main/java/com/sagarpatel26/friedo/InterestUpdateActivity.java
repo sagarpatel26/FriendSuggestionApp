@@ -2,6 +2,7 @@ package com.sagarpatel26.friedo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -105,7 +106,7 @@ public class InterestUpdateActivity extends AppCompatActivity
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
                                 Log.d("IRET", new String(responseBody));
-                                startActivity(new Intent(getBaseContext(), Thanks.class));
+                                startActivity(new Intent(getBaseContext(), FriendListActivity.class));
                                 finish();
                             }
 
@@ -116,7 +117,10 @@ public class InterestUpdateActivity extends AppCompatActivity
                                 Log.d("IRETERR", entity.toString());
                                 Log.d("IRETERR", jsonParams.toString());
 
-
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(Constants.KEY_TOKEN, "EXPIRED");
+                                editor.commit();
                                 Log.d("IRETERR", new String(responseBody));
                                 Log.d("IRETERR", error.getMessage());
                                 startActivity(new Intent(getBaseContext(), Failure.class));

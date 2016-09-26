@@ -27,13 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "EXPIRED");
-        if (!token.equals("EXPIRED")) {
-
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//        String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "EXPIRED");
+//        if (!token.equals("EXPIRED")) {
+//
+//            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
 
         Button btn_login_submit = (Button)findViewById(R.id.btn_login_submit);
         btn_login_submit.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +67,16 @@ public class LoginActivity extends AppCompatActivity {
                                     try {
                                         int userId = jsonReader.getInt(Constants.KEY_USERID);
                                         String httpAuthToken = jsonReader.getString(Constants.KEY_TOKEN);
+                                        String username = jsonReader.getString(Constants.KEY_USERNAME);
+                                        String email = jsonReader.getString(Constants.KEY_EMAIL);
                                         boolean first_time = jsonReader.getBoolean("first_time");
 
                                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putInt(Constants.KEY_USERID, userId);
                                         editor.putString(Constants.KEY_TOKEN, httpAuthToken);
+                                        editor.putString(Constants.KEY_USERNAME, username);
+                                        editor.putString(Constants.KEY_EMAIL, email);
                                         editor.commit();
 
                                         if (first_time) {
@@ -81,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                             finish();
                                         }
                                         else {
-                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                            Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
                                             startActivity(intent);
                                             finish();
                                         }

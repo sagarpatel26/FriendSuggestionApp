@@ -5,19 +5,18 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
-public class HomeActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_splash);
 
         int userId = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.KEY_USERID, 0);
         final String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "NoToken");
@@ -29,7 +28,9 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                        ((TextView) findViewById(R.id.et_mssg_home)).setText(responseBody.toString() + " " + token);
+                        Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
 
                     @Override
@@ -45,5 +46,6 @@ public class HomeActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+
     }
 }

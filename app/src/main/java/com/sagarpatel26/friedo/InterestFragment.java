@@ -59,20 +59,21 @@ public class InterestFragment extends Fragment {
                     interestList.add(new Interest(interest, false));
                 }
             }
-            if (savedInstanceState != null) {
 
-                ArrayList<Integer> al = savedInstanceState.getIntegerArrayList(ARG_INTEREST_SELECTED);
-
-                if (al != null) {
-                    for (int i = 0; i < al.size(); ++i) {
-
-                        if (al.get(i) == 1)
-                            interestList.get(i).setChecked(true);
-                        else
-                            interestList.get(i).setChecked(false);
-                    }
-                }
-            }
+//            if (savedInstanceState != null) {
+//
+//                ArrayList<Integer> al = savedInstanceState.getIntegerArrayList(ARG_INTEREST_SELECTED);
+//
+//                if (al != null) {
+//                    for (int i = 0; i < al.size(); ++i) {
+//
+//                        if (al.get(i) == 1)
+//                            interestList.get(i).setChecked(true);
+//                        else
+//                            interestList.get(i).setChecked(false);
+//                    }
+//                }
+//            }
         }
     }
 
@@ -93,7 +94,6 @@ public class InterestFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                // TODO: write a method that would create a list of all interest selected by the user, ALSO IF possible limit them to max 3
                 ArrayList<Integer> arg = new ArrayList<>();
 
                 View child_view;

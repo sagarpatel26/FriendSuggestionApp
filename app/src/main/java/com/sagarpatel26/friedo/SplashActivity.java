@@ -19,11 +19,11 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         int userId = PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.KEY_USERID, 0);
-        final String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "NoToken");
+        final String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "EXPIRED");
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.setBasicAuth(token, "");
         httpClient.get(this,
-                Constants.BASE_URL+"/api/suggested_friends/" + String.valueOf(userId),
+                Constants.BASE_URL+"/api/verify_token" ,
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

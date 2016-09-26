@@ -30,8 +30,10 @@ public class Constants {
     public static final String URL_TOKEN = "/api/token";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_EMAIL = "email";
-    public static String URL_USERS = "/api/users";
-    public static String URL_INTERESTS = "/api/interests";
-    public static String URL_QUESTIONS = "/api/questions";
+    public static final String URL_USERS = "/api/users";
+    public static final String URL_INTERESTS = "/api/interests";
+    public static final String URL_QUESTIONS = "/api/questions";
+    public static final String SUGGESTED_FRIENDS = "/api/suggested_friends/";
+    public static final String KEY_SUGGESTED_FRIENDS = "SFL";
 }
 

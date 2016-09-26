@@ -18,10 +18,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,54 +27,79 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String token = PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, "EXPIRED");
+        if (!token.equals("EXPIRED")) {
+
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         Button btn_login_submit = (Button)findViewById(R.id.btn_login_submit);
         btn_login_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                try {
-                    JSONObject jsonParams = new JSONObject();
-                    jsonParams.put("username", ((EditText) findViewById(R.id.et_username)).getText());
-                    jsonParams.put("password", ((EditText) findViewById(R.id.et_password)).getText());
-                    StringEntity entity = new StringEntity(jsonParams.toString());
+                String username = ((EditText) findViewById(R.id.et_username)).getText().toString();
+                String password = ((EditText) findViewById(R.id.et_password)).getText().toString();
 
-                    AsyncHttpClient httpClient = new AsyncHttpClient();
-                    httpClient.post(getBaseContext(),
-                            Constants.BASE_URL + Constants.URL_LOGIN,
-                            entity,
-                            "application/json",
-                            new AsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                AsyncHttpClient httpClient = new AsyncHttpClient();
+                httpClient.setBasicAuth(username, password);
+                httpClient.get(getBaseContext(),
+                        Constants.BASE_URL + Constants.URL_TOKEN,
+                        new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                                    String mssg = new String(responseBody);
-                                    ((TextView) findViewById(R.id.tv_response)).setText(mssg);
+                                String responseString = new String(responseBody);
+                                if (responseString.equals("Unauthorized Access")) {
 
-                                    if (mssg.startsWith("OK")) {
+                                    ((TextView) findViewById(R.id.tv_response)).setText("Wrong Credentials");
+                                }
+                                else {
 
-                                        int user_id = Integer.parseInt(mssg.substring(2));
+                                    JSONObject jsonReader = null;
+                                    try {
+                                        jsonReader = new JSONObject(responseString);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        int userId = jsonReader.getInt(Constants.KEY_USERID);
+                                        String httpAuthToken = jsonReader.getString(Constants.KEY_TOKEN);
+                                        boolean first_time = jsonReader.getBoolean("first_time");
 
                                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putInt(Constants.KEY_USERID, user_id);
+                                        editor.putInt(Constants.KEY_USERID, userId);
+                                        editor.putString(Constants.KEY_TOKEN, httpAuthToken);
                                         editor.commit();
 
-                                        Intent intent = new Intent(getApplicationContext(), InterestUpdateActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        if (first_time) {
+                                            Intent intent = new Intent(getApplicationContext(), InterestUpdateActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else {
+                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                                    ((TextView) findViewById(R.id.tv_response)).setText(error.getMessage());
-                                }
-                            });
-                } catch (UnsupportedEncodingException | JSONException e) {
-                    Log.d("LoginReq", e.getMessage());
-                }
+                                ((TextView) findViewById(R.id.tv_response)).setText(error.getMessage());
+                            }
+                        });
             }
+
         });
 
 

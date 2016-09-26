@@ -48,22 +48,12 @@ public class InterestUpdateActivity extends AppCompatActivity
         if (findViewById(R.id.fragment_container) != null) {
 
             if (savedInstanceState != null) {
-
-                questionsList = savedInstanceState.getStringArrayList("questionsList");
-                for (int i=0;i<optionsList.size();++i) {
-
-
-                    optionsList.add(savedInstanceState.getStringArrayList("options"+String.valueOf(i)));
-                }
                 return;
             }
 
 
             progressDialog = new ProgressDialog(this);
-
             InterestQuestionsOptionsFetcher iqof = new InterestQuestionsOptionsFetcher();
-
-
             iqof.execute();
         }
 
@@ -105,7 +95,7 @@ public class InterestUpdateActivity extends AppCompatActivity
                 jsonParams.put(Constants.KEY_DREAMCITY, optionsSelected.get(7));
 
                 final StringEntity entity = new StringEntity(jsonParams.toString());
-
+                httpClient.setBasicAuth(PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_TOKEN, ""), "");
                 httpClient.post(getBaseContext(),
                         Constants.BASE_URL + Constants.URL_INTERESTS,
                         entity,
@@ -267,25 +257,5 @@ public class InterestUpdateActivity extends AppCompatActivity
             Log.d("ASYNC", response);
             return response;
         }
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putStringArrayList("questionsList", questionsList);
-        for (int i=0;i<optionsList.size();++i) {
-
-
-            outState.putStringArrayList("options"+String.valueOf(i), optionsList.get(i));
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-
-
     }
 }

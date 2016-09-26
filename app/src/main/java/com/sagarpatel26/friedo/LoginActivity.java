@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
                                     String mssg = new String(responseBody);
-                                    //((TextView) findViewById(R.id.tv_response)).setText(mssg);
+                                    ((TextView) findViewById(R.id.tv_response)).setText(mssg);
 
                                     if (mssg.startsWith("OK")) {
 

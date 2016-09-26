@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                                     Toast.makeText(getBaseContext(), "Successfully Registered Please Login to Continue!", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                                    startActivity(new Intent(getBaseContext(), LoginActivity.class));
                                     finish();
                                 }
 

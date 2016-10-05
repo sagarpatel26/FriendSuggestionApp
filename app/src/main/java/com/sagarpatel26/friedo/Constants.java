@@ -6,7 +6,7 @@ package com.sagarpatel26.friedo;
  */
 public class Constants {
 
-    public static final String BASE_URL = "http://192.168.1.104:5000";
+    public static final String BASE_URL = "http://192.168.43.205:5000";
 
 
     public static final String KEY_QUESTIONS = "questions";

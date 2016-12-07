@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".LoginActivity"
-            android:label="Friedo"></activity>
+            android:label="Friedo" />
         <activity
             android:name=".InterestUpdateActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -36,7 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".AboutUs"></activity>
     </application>
 
 </manifest>

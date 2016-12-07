@@ -1,10 +1,13 @@
 package com.sagarpatel26.friedo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -46,6 +49,17 @@ public class SuggestedFriendsList extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, suggestedFriendsArrayList);
         friendsList.setAdapter(adapter);
 
+        final Context context = getActivity();
+
+        friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String username_clicked = suggestedFriendsArrayList.get(i);
+                Intent user_profile_intent = new Intent(context, UserProfileActivity.class);
+                user_profile_intent.putExtra("username", username_clicked);
+                startActivity(user_profile_intent);
+            }
+        });
         return view;
     }
 

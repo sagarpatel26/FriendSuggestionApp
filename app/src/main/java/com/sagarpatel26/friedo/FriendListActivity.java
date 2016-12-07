@@ -92,11 +92,11 @@ public class FriendListActivity extends AppCompatActivity
 
                                 String other_username = friends.getString(i);
                                 suggestedFriendsList.add(other_username);
-
-                                SuggestedFriendsList sfl = SuggestedFriendsList.newInstance(suggestedFriendsList);
-                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, sfl)
-                                        .commit();
                             }
+                            SuggestedFriendsList sfl = SuggestedFriendsList.newInstance(suggestedFriendsList);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, sfl)
+                                    .commit();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -173,10 +173,19 @@ public class FriendListActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send_feedback) {
 
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.putExtra(Intent.EXTRA_EMAIL, new String[]{"feedback@friedo.com"});
+            email.putExtra(Intent.EXTRA_SUBJECT, "Friedo Feedback");
+            email.putExtra(Intent.EXTRA_TEXT, "As a user of the App, Friedo. I would like to bring into your notice some issues:- ");
+            email.setType("message/rfc822");
+            startActivity(Intent.createChooser(email, "Choose an Email client :"));
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about_us) {
 
+            Intent intent = new Intent(this, AboutUs.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
